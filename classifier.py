@@ -1,3 +1,2 @@
-import sklearn
 import tensorflow
 
