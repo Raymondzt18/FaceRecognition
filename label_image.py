@@ -22,7 +22,6 @@ import argparse
 import numpy as np
 import tensorflow as tf
 
-
 def load_graph(model_file):
     graph = tf.Graph()
     graph_def = tf.GraphDef()
@@ -72,17 +71,28 @@ def load_labels(label_file):
     return label
 
 
-if __name__ == "__main__":
-    file_name = "tensorflow/examples/label_image/data/grace_hopper.jpg"
-    model_file = \
-        "tensorflow/examples/label_image/data/inception_v3_2016_08_28_frozen.pb"
-    label_file = "tensorflow/examples/label_image/data/imagenet_slim_labels.txt"
+def start_recognizing(filepath):
+    print("started neural net")
+    #file_name = "tensorflow/examples/label_image/data/grace_hopper.jpg"
+    #model_file = \
+    #    "tensorflow/examples/label_image/data/inception_v3_2016_08_28_frozen.pb"
+    #label_file = "tensorflow/examples/label_image/data/imagenet_slim_labels.txt"
+    #input_height = 299
+    #input_width = 299
+    #input_mean = 0
+    #input_std = 255
+    #input_layer = "input"
+    #output_layer = "InceptionV3/Predictions/Reshape_1"
+
+    file_name = filepath
+    model_file = "./trainedModels/output_graph.pb"
+    label_file = "./trainedModels/output_labels.txt"
     input_height = 299
     input_width = 299
     input_mean = 0
     input_std = 255
-    input_layer = "input"
-    output_layer = "InceptionV3/Predictions/Reshape_1"
+    input_layer = "Placeholder"
+    output_layer = "final_result"
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--image", help="image to be processed")
@@ -136,5 +146,10 @@ if __name__ == "__main__":
 
     top_k = results.argsort()[-5:][::-1]
     labels = load_labels(label_file)
+    ret = ''
     for i in top_k:
-        print(labels[i], results[i])
+        ret = ret + labels[i]
+        ret = ret + ':'
+        ret = ret + str(results[i])
+        ret = ret + '\n'
+    return(ret)
