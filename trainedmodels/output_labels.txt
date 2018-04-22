@@ -1,3 +1,5 @@
 chinese
 japanese
 korean
+non human
+other

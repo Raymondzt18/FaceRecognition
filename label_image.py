@@ -146,10 +146,10 @@ def start_recognizing(filepath):
 
     top_k = results.argsort()[-5:][::-1]
     labels = load_labels(label_file)
-    ret = ''
+    ret = '\nAsiafier says you are:\n\n'
     for i in top_k:
-        ret = ret + labels[i]
-        ret = ret + ':'
-        ret = ret + str(results[i])
+        ret ='\n' + ret + labels[i]
+        ret = ret + ': '
+        ret = ret + str('%.3f'%(results[i]*100)) + "%"
         ret = ret + '\n'
     return(ret)
